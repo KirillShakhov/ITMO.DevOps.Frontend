@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import {FC, FormEvent, useState} from "react";
+import {FC, useState} from "react";
 import {login} from "../services/authService.ts";
-
+import {useNavigate} from "react-router-dom";
 
 
 const Login: FC = () => {
@@ -10,31 +9,63 @@ const Login: FC = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
 
-    const handleLogin = async (e: FormEvent) => {
-        console.log('handleLogin')
+    const handleLoginClick = async () => {
+        console.log('handleLoginClick')
 
-
-        e.preventDefault();
         try {
-            const response = await login({ username, password });
+            const response = await login({username, password});
             console.log('response.data: ' + response.data)
             localStorage.setItem('username', response.data.username);
             localStorage.setItem('jwt', response.data.jwt);
-            navigate('/');
+            location.replace('/dashboard');
         } catch (err) {
-            setError('Failed to login: ' + e);
+            setError('Failed to login: ' + err);
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleLogin}>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-                <button type="submit">Login</button>
-                {error && <p>{error}</p>}
-            </form>
+        <div style={{
+            width: 500,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'left',
+            gap: 10,
+            marginLeft: 60
+        }}>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'end',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <h1>Login</h1>
+                <div
+                    onClick={() => {
+                        navigate('/register')
+                    }}
+                >
+                    <h3>sign up -&gt;</h3>
+                </div>
+            </div>
+            <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+            />
+            <button type="button" onClick={handleLoginClick}>Login</button>
+            <div style={{height: 40}}>
+                <p style={{color: '#ff8989'}}>{error}</p>
+            </div>
         </div>
     );
 };

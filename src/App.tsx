@@ -20,8 +20,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Navigate to="/dashboard"/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/register"
-                       element={<Register onRegisterSuccess={() => alert('Registration successful, please login.')}/>}/>
+                <Route path="/register" element={<Register />}/>
                 <Route path="/dashboard" element={isLogin ? <Dashboard/> : <Navigate to="/login"/>}/>
             </Routes>
         </Router>

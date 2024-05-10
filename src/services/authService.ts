@@ -14,11 +14,18 @@ interface AuthResponse {
 	}
 }
 
+interface RegisterResponse {
+	data: {
+		success: boolean;
+		message: string;
+	}
+}
+
 function login(credentials: Credentials): Promise<AuthResponse> {
 	return axios.post(`${API_URL}signin`, credentials);
 }
 
-function register(credentials: Credentials): Promise<void> {
+function register(credentials: Credentials): Promise<RegisterResponse> {
 	return axios.post(`${API_URL}signup`, credentials);
 }
 
