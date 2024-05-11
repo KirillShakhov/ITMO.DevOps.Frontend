@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.0.43:8080/auth/';
+const API_URL = 'http://88.201.239.41:8080/auth/';
 
 interface Credentials {
 	username: string;
