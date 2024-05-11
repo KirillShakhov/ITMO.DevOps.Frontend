@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from "./components/Dashboard.tsx";
+import Dashboard from "./components/dashboard/Dashboard.tsx";
 
 export interface UserData {
     username: string;
