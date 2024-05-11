@@ -46,7 +46,7 @@ const Login: FC = () => {
           justifyContent: 'space-between'
         }}
       >
-        <h1>Логин</h1>
+        <h1>Login</h1>
         <div
           onClick={() => {
             navigate('/register')
