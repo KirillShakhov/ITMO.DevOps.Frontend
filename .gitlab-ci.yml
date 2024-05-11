@@ -8,7 +8,7 @@ build_windows:
     GOOS: windows
     CGO_ENABLED: 0
   script:
-    - npm i
+    - npm install
     - npm run build
     - npm run lint
   artifacts:
@@ -24,7 +24,7 @@ build_linux:
     GOOS: linux
     CGO_ENABLED: 0
   script:
-    - npm i
+    - npm install
     - npm run build
     - npm run lint
   artifacts:
@@ -40,7 +40,7 @@ build_mac:
     GOOS: darwin
     CGO_ENABLED: 0
   script:
-    - npm i
+    - npm install
     - npm run build
     - npm run lint
   artifacts:
@@ -56,7 +56,7 @@ build_mac_arm:
     GOOS: darwin
     CGO_ENABLED: 0
   script:
-    - npm i
+    - npm install
     - npm run build
     - npm run lint
   artifacts:
