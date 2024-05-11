@@ -1,10 +1,15 @@
-import {FC, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useEffect, useRef, useState} from "react";
 import './style.css';
 import Message from "./Message.tsx";
+import {getMessages, MessageModel, sendMessage} from "../../services/messageService.ts";
 
+interface ChatProps{
+  recipient: string;
+}
 
-const Chat: FC = () => {
+const Chat: FC<ChatProps> = ({recipient}) => {
   const [message, setMessage] = useState<string>('');
+  const [messages, setMessages] = useState<MessageModel[]>();
   const messageContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -19,8 +24,25 @@ const Chat: FC = () => {
     scrollToBottom();
   }, []);
 
-  const onSend = () => {
+  const updateMessage = useCallback(() => {
+    if (recipient === '') {
+      setMessages([]);
+      return;
+    }
+    getMessages().then(data=>{
+      setMessages(data.data);
+    }).catch(err => {
+      console.log(err);
+    });
+  }, [recipient]);
 
+  useEffect(() => {
+    updateMessage();
+  }, [recipient, updateMessage]);
+
+  const onSend = async () => {
+    await sendMessage(message, 'kirill1');
+    updateMessage();
   }
 
   return (
@@ -41,8 +63,8 @@ const Chat: FC = () => {
           padding: 10,
         }}
       >
-        {Array.from({ length: 30 }, (_, i) => (
-          <Message self={i % 3 == 0 } />
+        {messages?.map((messageModel) => (
+          <Message key={messageModel.id} self={messageModel.username !== recipient} text={messageModel.text} />
         ))}
       </div>
       <div

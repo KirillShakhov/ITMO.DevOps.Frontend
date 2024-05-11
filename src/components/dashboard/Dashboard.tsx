@@ -19,6 +19,7 @@ const Dashboard: FC = () => {
   const [chats, setChats] = useState<Chat[]>([{username: 'kirill'}, {username: 'kirill2'}]);
   const [showPopup, setShowPopup] = useState(false);
   const [newUsername, setNewUsername] = useState("");
+  const [recipient, setRecipient] = useState("");
 
   // const user: User = useMemo(() => {
   //     const username = localStorage.getItem('username');
@@ -42,6 +43,10 @@ const Dashboard: FC = () => {
     setNewUsername("");
     setShowPopup(false);
   };
+
+  const onSelect = (value: string) => {
+    setRecipient(value);
+  }
 
   useEffect(()=>{
     if (!isLogin()){
@@ -82,7 +87,7 @@ const Dashboard: FC = () => {
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
         }}>
-          <ChatList chats={chats}/>
+          <ChatList chats={chats} onSelect={onSelect}/>
         </div>
         <div style={{
           height: '100%',
@@ -91,7 +96,7 @@ const Dashboard: FC = () => {
           borderTopRightRadius: 10,
           borderBottomRightRadius: 10
         }}>
-          <Chat/>
+          <Chat recipient={recipient} />
         </div>
       </div>
       <Popup title="Add New Chat" isOpen={showPopup} onClose={() => setShowPopup(false)}>

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'http://88.201.239.41:8080/auth/';
+import {API_URL} from "./url.ts";
 
 interface Credentials {
 	username: string;
@@ -22,11 +21,11 @@ interface RegisterResponse {
 }
 
 function login(credentials: Credentials): Promise<AuthResponse> {
-	return axios.post(`${API_URL}signin`, credentials);
+	return axios.post(`${API_URL}/auth/signin`, credentials);
 }
 
 function register(credentials: Credentials): Promise<RegisterResponse> {
-	return axios.post(`${API_URL}signup`, credentials);
+	return axios.post(`${API_URL}/auth/signup`, credentials);
 }
 
 export { login, register };

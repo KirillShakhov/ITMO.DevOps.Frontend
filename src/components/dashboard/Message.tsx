@@ -3,9 +3,10 @@ import './style.css';
 
 interface MessageProps {
   self: boolean,
+  text: string,
 }
 
-const Message: FC<MessageProps> = ({self}) => {
+const Message: FC<MessageProps> = ({self, text}) => {
 
   return (
     <div style={{
@@ -29,7 +30,7 @@ const Message: FC<MessageProps> = ({self}) => {
             overflowWrap: 'break-word',
           }}
         >
-          ТекстТекст ТекстТекстТекст ТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекстТекст
+          {text}
         </div>
         <div
           style={{
