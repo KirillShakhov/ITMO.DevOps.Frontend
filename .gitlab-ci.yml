@@ -2,10 +2,12 @@ stages:
   - build
   - test
 
+before_script:
+  - npm install
+
 build:
   stage: build
   script:
-    - npm install
     - npm run build
   artifacts:
     paths:
