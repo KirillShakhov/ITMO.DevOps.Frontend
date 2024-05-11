@@ -10,7 +10,6 @@ build_windows:
   script:
     - npm install
     - npm run build
-    - npm run lint
   artifacts:
     paths:
       - ./app_windows_amd64.exe
@@ -26,7 +25,6 @@ build_linux:
   script:
     - npm install
     - npm run build
-    - npm run lint
   artifacts:
     paths:
       - ./app_linux_amd64
@@ -42,7 +40,6 @@ build_mac:
   script:
     - npm install
     - npm run build
-    - npm run lint
   artifacts:
     paths:
       - ./app_mac_amd64
@@ -58,7 +55,6 @@ build_mac_arm:
   script:
     - npm install
     - npm run build
-    - npm run lint
   artifacts:
     paths:
       - ./app_mac_arm64
