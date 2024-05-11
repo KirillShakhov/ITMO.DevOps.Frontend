@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC} from "react";
 import './style.css';
 import ChatPreview from "../../features/chatPreview/ChatPreview.tsx";
 import {Chat} from "./Dashboard.tsx";

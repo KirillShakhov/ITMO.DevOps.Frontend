@@ -41,7 +41,7 @@ const Chat: FC<ChatProps> = ({recipient}) => {
   }, [recipient, updateMessage]);
 
   const onSend = async () => {
-    await sendMessage(message, 'kirill1');
+    await sendMessage(message, recipient);
     updateMessage();
   }
 
