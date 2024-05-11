@@ -52,8 +52,14 @@ const Chat: FC<ChatProps> = ({recipient}) => {
 
   const onSend = async () => {
     await sendMessage(message, recipient);
+    setMessage('');
     updateMessage();
   }
+
+  const handleEnter = () => {
+    if (message === '') return;
+    onSend().then();
+  };
 
   return (
     <div style={{
@@ -92,6 +98,11 @@ const Chat: FC<ChatProps> = ({recipient}) => {
           placeholder="Text"
           required
           style={{width: '100%'}}
+          onKeyDown={(event) => {
+            if(event.key === 'Enter'){
+              handleEnter();
+            }
+          }}
         />
         <button onClick={onSend}>&gt;</button>
       </div>

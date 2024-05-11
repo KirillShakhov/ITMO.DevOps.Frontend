@@ -18,11 +18,14 @@ const Dashboard: FC = () => {
   const navigate = useNavigate();
   const [chats, setChats] = useState<Chat[]>(() => {
     const savedChats = localStorage.getItem('chats');
-    return savedChats ? JSON.parse(savedChats) : [{ username: 'kirill' }, { username: 'kirill2' }];
+    return savedChats ? JSON.parse(savedChats) : [];
   });
   const [showPopup, setShowPopup] = useState(false);
   const [newUsername, setNewUsername] = useState("");
-  const [activeChat, setActiveChat] = useState('');
+  const [activeChat, setActiveChat] = useState(() => {
+    const activeChat = localStorage.getItem('activeChat');
+    return activeChat ? activeChat : '';
+  });
 
   const handleLogout = () => {
     localStorage.removeItem('username');
@@ -50,7 +53,8 @@ const Dashboard: FC = () => {
 
   useEffect(() => {
     localStorage.setItem('chats', JSON.stringify(chats));
-  }, [chats]);
+    localStorage.setItem('activeChat', activeChat);
+  }, [activeChat, chats]);
 
   return (
     <div style={{
