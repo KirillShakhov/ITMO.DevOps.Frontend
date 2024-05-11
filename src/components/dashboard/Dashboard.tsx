@@ -16,20 +16,13 @@ export interface Chat {
 
 const Dashboard: FC = () => {
   const navigate = useNavigate();
-  const [chats, setChats] = useState<Chat[]>([{username: 'kirill'}, {username: 'kirill2'}]);
+  const [chats, setChats] = useState<Chat[]>(() => {
+    const savedChats = localStorage.getItem('chats');
+    return savedChats ? JSON.parse(savedChats) : [{ username: 'kirill' }, { username: 'kirill2' }];
+  });
   const [showPopup, setShowPopup] = useState(false);
   const [newUsername, setNewUsername] = useState("");
-  const [recipient, setRecipient] = useState("");
-
-  // const user: User = useMemo(() => {
-  //     const username = localStorage.getItem('username');
-  //     const jwt = localStorage.getItem('jwt');
-  //     if (!username || !jwt) {
-  //         navigate('/login');
-  //         return {username: '', jwt: ''};
-  //     }
-  //     return {username, jwt};
-  // }, [navigate]);
+  const [activeChat, setActiveChat] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem('username');
@@ -44,15 +37,20 @@ const Dashboard: FC = () => {
     setShowPopup(false);
   };
 
-  const onSelect = (value: string) => {
-    setRecipient(value);
+  const onDeleteChat = (usernameToRemove : string) => {
+    const updatedChats = chats.filter(chat => chat.username !== usernameToRemove);
+    setChats(updatedChats);
   }
 
-  useEffect(()=>{
-    if (!isLogin()){
+  useEffect(() => {
+    if (!isLogin()) {
       navigate('/login')
     }
   });
+
+  useEffect(() => {
+    localStorage.setItem('chats', JSON.stringify(chats));
+  }, [chats]);
 
   return (
     <div style={{
@@ -87,7 +85,12 @@ const Dashboard: FC = () => {
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
         }}>
-          <ChatList chats={chats} onSelect={onSelect}/>
+          <ChatList
+            chats={chats}
+            activeChat={activeChat}
+            setActiveChat={setActiveChat}
+            onDelete={onDeleteChat}
+          />
         </div>
         <div style={{
           height: '100%',
@@ -96,7 +99,7 @@ const Dashboard: FC = () => {
           borderTopRightRadius: 10,
           borderBottomRightRadius: 10
         }}>
-          <Chat recipient={recipient} />
+          <Chat recipient={activeChat}/>
         </div>
       </div>
       <Popup title="Add New Chat" isOpen={showPopup} onClose={() => setShowPopup(false)}>
