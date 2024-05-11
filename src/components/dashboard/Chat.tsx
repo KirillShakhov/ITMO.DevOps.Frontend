@@ -2,6 +2,7 @@ import {FC, useCallback, useEffect, useRef, useState} from "react";
 import './style.css';
 import Message from "./Message.tsx";
 import {getMessages, MessageModel, sendMessage} from "../../services/messageService.ts";
+import {getUsername} from "../../utils/userUtils.ts";
 
 interface ChatProps{
   recipient: string;
@@ -24,20 +25,29 @@ const Chat: FC<ChatProps> = ({recipient}) => {
     scrollToBottom();
   }, []);
 
+  const username = getUsername();
+
   const updateMessage = useCallback(() => {
     if (recipient === '') {
       setMessages([]);
       return;
     }
-    getMessages().then(data=>{
-      setMessages(data.data.filter(m => m.recipient === recipient));
+    getMessages().then(data => {
+      const filteredMessages = data.data.filter(m =>
+        (m.recipient === recipient && m.username === username) || (m.recipient === username && m.username === recipient)
+      );
+      if (JSON.stringify(messages) !== JSON.stringify(filteredMessages)) {
+        setMessages(filteredMessages);
+      }
     }).catch(err => {
       console.log(err);
     });
-  }, [recipient]);
+  }, [recipient, username, messages]);
 
   useEffect(() => {
     updateMessage();
+    const intervalId = setInterval(updateMessage, 1000);
+    return () => clearInterval(intervalId);
   }, [recipient, updateMessage]);
 
   const onSend = async () => {

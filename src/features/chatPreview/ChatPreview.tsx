@@ -9,7 +9,7 @@ interface ChatPreviewProps {
   onDelete: () => void;
 }
 
-const ChatPreview: FC<ChatPreviewProps> = ({active = false, title, message, onClick, onDelete}) => {
+const ChatPreview: FC<ChatPreviewProps> = ({active = false, title, onClick, onDelete}) => {
   return (
     <div
       style={{
