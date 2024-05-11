@@ -1,12 +1,15 @@
 import {FC} from "react";
 import './style.css';
+import moment from 'moment'
 
 interface MessageProps {
   self: boolean,
   text: string,
+  createDate: Date,
 }
 
-const Message: FC<MessageProps> = ({self, text}) => {
+const Message: FC<MessageProps> = ({self, text, createDate}) => {
+  const formattedDate = (moment(createDate)).format('HH:mm:ss DD.MM.YYYY')
 
   return (
     <div style={{
@@ -39,7 +42,7 @@ const Message: FC<MessageProps> = ({self, text}) => {
             color: 'rgba(255,255,255,0.4)'
           }}
         >
-          19.10.2002
+          {formattedDate}
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@ const Chat: FC<ChatProps> = ({recipient}) => {
       return;
     }
     getMessages().then(data=>{
-      setMessages(data.data);
+      setMessages(data.data.filter(m => m.recipient === recipient));
     }).catch(err => {
       console.log(err);
     });
@@ -64,7 +64,7 @@ const Chat: FC<ChatProps> = ({recipient}) => {
         }}
       >
         {messages?.map((messageModel) => (
-          <Message key={messageModel.id} self={messageModel.username !== recipient} text={messageModel.text} />
+          <Message key={messageModel.id} self={messageModel.username !== recipient} text={messageModel.text} createDate={messageModel.createdDate} />
         ))}
       </div>
       <div
