@@ -1,0 +1,24 @@
+stages:
+  - build
+  - test
+
+before_script:
+  - npm install
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - ./dist
+  only:
+    - master
+
+
+test:
+  stage: test
+  script:
+    - npm run lint
+  only:
+    - master
