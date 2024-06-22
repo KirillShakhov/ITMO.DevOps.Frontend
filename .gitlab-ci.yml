@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - docker-build
 
 before_script:
   - npm install
@@ -22,3 +23,13 @@ test:
     - npm run lint
   only:
     - master
+
+docker-build:
+  stage: docker-build
+  script:
+    - docker build --platform linux/amd64 -t kirillshakhov/devops-frontend-image:$CI_COMMIT_SHORT_SHA .
+    - docker push kirillshakhov/devops-frontend-image:$CI_COMMIT_SHORT_SHA
+  only:
+    - master
+  dependencies:
+    - build

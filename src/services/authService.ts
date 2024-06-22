@@ -25,6 +25,7 @@ function login(credentials: Credentials): Promise<AuthResponse> {
 }
 
 function register(credentials: Credentials): Promise<RegisterResponse> {
+	console.log(`url: ${API_URL}/auth/signup`)
 	return axios.post(`${API_URL}/auth/signup`, credentials);
 }
 
