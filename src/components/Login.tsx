@@ -20,7 +20,7 @@ const Login: FC = () => {
       localStorage.setItem('jwt', response.data.jwt);
       location.replace('/dashboard');
     } catch (err) {
-      setError('Failed to login: ' + err);
+      setError('Неправильный логин или пароль');
     }
   };
 
